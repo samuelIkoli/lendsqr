@@ -86,9 +86,6 @@ export const login: RequestHandler = async (req: Request, res: Response) => {
 
 export const checkSession: RequestHandler = async (req: Request, res: Response) => {
     try {
-
-        // const user = await knex('Users').select('*')
-        // console.log(user)
         return res.status(200).json({
             message: "Success",
             session: req.session
@@ -186,4 +183,10 @@ export const transfer: RequestHandler = async (req: Request, res: Response) => {
         console.log(error)
         return res.status(500).json({ message: "Error" })
     }
+}
+
+export const logout: RequestHandler = async (req: Request, res: Response) => {
+    res.session.user_id = null
+    delete res.session
+    return res.status(200).json({ message: "Logged out" })
 }
