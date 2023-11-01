@@ -3,6 +3,8 @@ const app = express();
 // import * as userRoutes from './routes/users';
 import { readdirSync } from 'fs';
 import session from 'express-session'
+import swaggerUi from "swagger-ui-express";
+import * as swaggerOptions from "./swagger";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -18,6 +20,7 @@ app.use(
         }
     })
 );
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOptions));
 
 import dotenv from 'dotenv';
 dotenv.config();
