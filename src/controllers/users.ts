@@ -18,7 +18,7 @@ export const getUsers: RequestHandler = async (req: Request, res: Response) => {
     try {
 
         const user = await knex('Users').select('id', 'email', 'wallet')
-        console.log(user)
+        // console.log(user)
         return res.status(200).json({
             message: "Success",
             user
@@ -45,13 +45,13 @@ export const register: RequestHandler = async (req: Request, res: Response) => {
             wallet: 1000
         };
         const user = await knex('Users').insert(newUser);
-        console.log(user)
+        // console.log(user)
         return res.status(201).json({
             message: "Success",
             user
         })
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return res.status(400).json({ message: "Failed to register user" })
     }
 
@@ -64,10 +64,8 @@ export const login: RequestHandler = async (req: Request, res: Response) => {
         if (!user) {
             return res.status(400).json({ Error: 'Wrong email or password' })
         }
-        console.log(user)
         const hash = user.password
         const correct = await checkPassword(password, hash)
-        console.log('pass is', correct)
         if (!correct) {
             return res.status(400).json({ message: "Wrong email or password" })
         }
@@ -78,7 +76,7 @@ export const login: RequestHandler = async (req: Request, res: Response) => {
             user
         })
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return res.status(400).json({ message: "Wrong email or password" })
     }
 
@@ -99,12 +97,12 @@ export const checkSession: RequestHandler = async (req: Request, res: Response) 
 export const deposit: RequestHandler = async (req: Request, res: Response) => {
     try {
         const { amount } = req.body
-        console.log('amount is', amount)
+        // console.log('amount is', amount)
         if (amount < 1 && typeof amount != 'number') {
             return res.status(400).json({ message: "Invalid amount" })
         }
         const id = req.body.id || req.session.user_id
-        console.log('id is', id)
+        // console.log('id is', id)
         const update = await knex('Users')
             .where('id', '=', id)
             .increment('wallet', amount);
@@ -119,7 +117,7 @@ export const deposit: RequestHandler = async (req: Request, res: Response) => {
             message: "Success"
         })
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return res.status(400).json({ message: "Error" })
     }
 }
@@ -127,12 +125,12 @@ export const deposit: RequestHandler = async (req: Request, res: Response) => {
 export const withdraw: RequestHandler = async (req: Request, res: Response) => {
     try {
         const { amount } = req.body
-        console.log('amount is', amount)
+        // console.log('amount is', amount)
         if (amount < 1 && typeof amount != 'number') {
             return res.status(400).json({ message: "Invalid amount" })
         }
         const id = req.body.id || req.session.user_id
-        console.log('id is', id)
+        // console.log('id is', id)
         const update = await knex('Users')
             .where('id', '=', id)
             .decrement('wallet', amount);
@@ -147,7 +145,7 @@ export const withdraw: RequestHandler = async (req: Request, res: Response) => {
             message: "Success"
         })
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return res.status(400).json({ message: "Error" })
     }
 }
@@ -156,7 +154,7 @@ export const transfer: RequestHandler = async (req: Request, res: Response) => {
     try {
         const { amount, receiver_id } = req.body
         const id = req.body.id || req.session.user_id
-        console.log('amount is', amount)
+        // console.log('amount is', amount)
 
         if (!(amount && receiver_id && id)) {
             return res.status(400).json({ message: "Fill all necessary details" })
@@ -172,13 +170,13 @@ export const transfer: RequestHandler = async (req: Request, res: Response) => {
         if (!receiver) {
             return res.status('400').json({ message: "Not found" })
         }
-        console.log('id is', id)
+        // console.log('id is', id)
         const update = await knex('Users')
             .where('id', '=', id)
             .andWhere('wallet', '>=', amount)
             .decrement('wallet', amount);
         if (update === 0) {
-            console.log('Wallet amount not decreased: insufficient funds');
+            // console.log('Wallet amount not decreased: insufficient funds');
             return res.status(400).json({ message: "Wallet amount not decreased: insufficient funds" })
         }
         const new_transfer = {
@@ -193,7 +191,7 @@ export const transfer: RequestHandler = async (req: Request, res: Response) => {
             message: "Success"
         }) : res.status(400).json({ message: "Error" })
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return res.status(400).json({ message: "Error" })
     }
 }

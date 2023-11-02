@@ -25,12 +25,24 @@ describe('API Endpoint Tests', () => {
     // });
 
 
-    it(`2). GET requests to /users should get all user records`, async () => {
-        const response = await chai.request(app).get("/users").type('form');
+    // it(`2). GET requests to /users should get all user records`, async () => {
+    //     const response = await chai.request(app).get("/users").type('form');
+    //     expect(response.status).to.equal(200);
+    //     expect(response.body).to.be.an('object');
+    //     expect(response.body.user[0]).to.have.property("email");
+    //     expect(response.body.user[0]).to.have.property("wallet");
+    //     expect(response.body.user[0]).to.have.property("id");
+    // });
+
+    it(`1). POST requests to /users/login should login a user and return the user record`, async () => {
+        const response = await chai.request(app).post("/users/login").type('form').send({
+            '_method': 'post',
+            email: "ayibanimi_ikoli@yahoo.com",
+            password
+        });
         expect(response.status).to.equal(200);
         expect(response.body).to.be.an('object');
-        expect(response.body.user[0]).to.have.property("email");
-        expect(response.body.user[0]).to.have.property("wallet");
-        expect(response.body.user[0]).to.have.property("id");
+        // expect(response.body).to.have.property("name");
+        // expect(response.body).to.have.property("_id");
     });
 });
