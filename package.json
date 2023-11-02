@@ -43,6 +43,7 @@
     "swagger-ui-express": "^5.0.0",
     "ts-node-dev": "^2.0.0",
     "typeorm": "^0.3.17",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "vercel": "^32.5.0"
   }
 }
