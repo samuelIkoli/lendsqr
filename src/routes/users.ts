@@ -163,7 +163,7 @@ router.route("/login")
 /**
  * @swagger
  * /users/deposit:
- *   post:
+ *   patch:
  *     summary: Make a deposit to your wallet.
  *     description: Make a deposit to your account.
  *     tags: [Transactions]
@@ -212,12 +212,12 @@ router.route("/login")
  *                 data:
  *                   type: null
  */
-router.post("/deposit", deposit)
+router.patch("/deposit", deposit)
 
 /**
  * @swagger
  * /users/withdraw:
- *   post:
+ *   patch:
  *     summary: Withdraw from your wallet.
  *     description: Withdraw from your wallet.
  *     tags: [Transactions]
@@ -266,7 +266,7 @@ router.post("/deposit", deposit)
  *                 data:
  *                   type: null
  */
-router.post("/withdraw", withdraw)
+router.patch("/withdraw", withdraw)
 
 /**
  * @swagger

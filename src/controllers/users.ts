@@ -70,7 +70,7 @@ export const login: RequestHandler = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Wrong email or password" })
         }
         req.session.user_id = user.id
-        console.log(req.session)
+        // console.log(req.session)
         return res.status(200).json({
             message: "Success",
             user
@@ -113,7 +113,7 @@ export const deposit: RequestHandler = async (req: Request, res: Response) => {
             amount
         }
         const create_transfer = await knex('Transactions').insert(new_transaction);
-        return res.status(201).json({
+        return res.status(200).json({
             message: "Success"
         })
     } catch (error) {
@@ -133,7 +133,12 @@ export const withdraw: RequestHandler = async (req: Request, res: Response) => {
         // console.log('id is', id)
         const update = await knex('Users')
             .where('id', '=', id)
+            .andWhere('wallet', '>=', amount)
             .decrement('wallet', amount);
+        if (update === 0) {
+            // console.log('Wallet amount not decreased: insufficient funds');
+            return res.status(400).json({ message: "Withdrawal not successful: insufficient funds" })
+        }
         const new_transaction = {
             id: uuid(),
             user_id: id,
@@ -141,7 +146,7 @@ export const withdraw: RequestHandler = async (req: Request, res: Response) => {
             amount
         }
         const create_transfer = await knex('Transactions').insert(new_transaction);
-        return res.status(201).json({
+        return res.status(200).json({
             message: "Success"
         })
     } catch (error) {
@@ -177,7 +182,7 @@ export const transfer: RequestHandler = async (req: Request, res: Response) => {
             .decrement('wallet', amount);
         if (update === 0) {
             // console.log('Wallet amount not decreased: insufficient funds');
-            return res.status(400).json({ message: "Wallet amount not decreased: insufficient funds" })
+            return res.status(400).json({ message: "Transfer not successful: insufficient funds" })
         }
         const new_transfer = {
             id: uuid(),
@@ -187,7 +192,7 @@ export const transfer: RequestHandler = async (req: Request, res: Response) => {
         }
         const create_transfer = await knex('Transfers').insert(new_transfer);
 
-        return create_transfer ? res.status(201).json({
+        return create_transfer ? res.status(200).json({
             message: "Success"
         }) : res.status(400).json({ message: "Error" })
     } catch (error) {
