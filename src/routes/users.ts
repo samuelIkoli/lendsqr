@@ -1,7 +1,7 @@
 import express from 'express'
 const router = express.Router()
 
-import { checkSession, deposit, getUsers, login, logout, register, transfer, withdraw } from '../controllers/users'
+import { checkSession, deposit, getDeposits, getUsers, getWithdrawals, login, logout, register, transfer, withdraw } from '../controllers/users'
 
 
 
@@ -166,7 +166,7 @@ router.route("/login")
  *   post:
  *     summary: Make a deposit to your wallet.
  *     description: Make a deposit to your account.
- *     tags: [User]
+ *     tags: [Transactions]
  *     parameters:
  *       - in: body
  *         name: Deposit
@@ -220,7 +220,7 @@ router.post("/deposit", deposit)
  *   post:
  *     summary: Withdraw from your wallet.
  *     description: Withdraw from your wallet.
- *     tags: [User]
+ *     tags: [Transactions]
  *     parameters:
  *       - in: body
  *         name: Withdrawal
@@ -274,7 +274,7 @@ router.post("/withdraw", withdraw)
  *   patch:
  *     summary: Transfer funds from one wallet to another (P2P).
  *     description: Transfer funds from one wallet to another (P2P).
- *     tags: [User]
+ *     tags: [Transactions]
  *     parameters:
  *       - in: body
  *         name: Transfer details
@@ -326,6 +326,136 @@ router.post("/withdraw", withdraw)
  */
 router.patch("/transfer", transfer)
 
+/**
+ * @swagger
+ * /users/deposits:
+ *   get:
+ *     summary: Get all deposit records in the database.
+ *     description: Get all deposit records in the database.
+ *     tags: [Transactions]
+ *     responses:
+ *       200:
+ *         deposits: Array of deposit records or empty array if no deposits.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 successful:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     successful:
+ *                       type: boolean
+ *                     message:
+ *                       type: string
+ *       500:
+ *         description: Failed to fetch deposits.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 successful:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "invalid input syntax for type integer: \"\""
+ *                 data:
+ *                   type: null
+ */
+router.get("/deposits", getDeposits)
+
+/**
+ * @swagger
+ * /users/withdrawals:
+ *   get:
+ *     summary: Get all withdrawal records in the database.
+ *     description: Get all withdrawal records in the database.
+ *     tags: [Transactions]
+ *     responses:
+ *       200:
+ *         withdrawals: Array of withdrawal records or empty array if no withdrawals.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 successful:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     successful:
+ *                       type: boolean
+ *                     message:
+ *                       type: string
+ *       500:
+ *         description: Failed to fetch withdrawals.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 successful:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "invalid input syntax for type integer: \"\""
+ *                 data:
+ *                   type: null
+ */
+router.get("/withdrawals", getWithdrawals)
+
+/**
+ * @swagger
+ * /users/logout:
+ *   get:
+ *     summary: Logout.
+ *     description: Logout.
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         users: Logged out successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 successful:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     successful:
+ *                       type: boolean
+ *                     message:
+ *                       type: string
+ *       500:
+ *         description: Can it actually fail, lol.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 successful:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "invalid input syntax for type integer: \"\""
+ *                 data:
+ *                   type: null
+ */
 router.get("/logout", logout)
 
 module.exports = router

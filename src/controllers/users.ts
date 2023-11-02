@@ -198,8 +198,33 @@ export const transfer: RequestHandler = async (req: Request, res: Response) => {
     }
 }
 
+export const getDeposits: RequestHandler = async (req: Request, res: Response) => {
+    try {
+
+        const deposits = await knex('Transactions').select('*').where('transaction_type', '=', 'D')
+        return res.status(200).json({
+            message: "Success",
+            deposits
+        })
+    } catch (error) {
+        return res.status(400).json({ message: "Error" })
+    }
+}
+export const getWithdrawals: RequestHandler = async (req: Request, res: Response) => {
+    try {
+
+        const withdrawals = await knex('Transactions').select('*').where('transaction_type', '=', 'W')
+        return res.status(200).json({
+            message: "Success",
+            withdrawals
+        })
+    } catch (error) {
+        return res.status(400).json({ message: "Error" })
+    }
+}
+
 export const logout: RequestHandler = async (req: Request, res: Response) => {
-    res.session.user_id = null
-    delete res.session
+    req.session.user_id = null
+    delete req.session
     return res.status(200).json({ message: "Logged out" })
 }
