@@ -28,7 +28,7 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hello World! Welcome to Lendsqr');
+    res.send('Hello World! Welcome to Lendsqr. You can check out /api-docs to get a documentation of the endpoints in this project and even test them there.');
 });
 
 readdirSync("./src/routes").map((path) =>
