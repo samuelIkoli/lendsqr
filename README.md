@@ -97,4 +97,9 @@ Documentation can be found [here](https://samuelikoli-lendsqr.onrender.com/api-d
 
 * [Server URL](https://samuelikoli-lendsqr.onrender.com/)
 
+
+## DB DESIGN
+
+![alt text](https://github.com/samuelIkoli/lendsqr/blob/main/src/lendsqrDesign.png?raw=true)
+
 Built by SAMUEL IKOLI
