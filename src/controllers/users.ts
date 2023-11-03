@@ -2,6 +2,7 @@ import express, { RequestHandler, Request, Response } from 'express'
 import { knex } from '../dbconfig';
 import bcrypt from 'bcryptjs'
 import { v4 as uuid } from 'uuid';
+import { transaction_object, transfer_object, user_object } from '../models/models'
 
 async function hashPassword(password: string) {
     const salt = await bcrypt.genSalt(10);
@@ -38,7 +39,7 @@ export const register: RequestHandler = async (req: Request, res: Response) => {
         }
         const hash = await hashPassword(password)
         const id = uuid()
-        const newUser = {
+        const newUser: user_object = {
             id,
             email: email.toLowerCase(),
             password: hash,
@@ -106,13 +107,13 @@ export const deposit: RequestHandler = async (req: Request, res: Response) => {
         const update = await knex('Users')
             .where('id', '=', id)
             .increment('wallet', amount);
-        const new_transaction = {
+        const new_transaction: transaction_object = {
             id: uuid(),
             user_id: id,
             transaction_type: 'D',
             amount
         }
-        const create_transfer = await knex('Transactions').insert(new_transaction);
+        const create_transaction = await knex('Transactions').insert(new_transaction);
         return res.status(200).json({
             message: "Success"
         })
@@ -139,13 +140,13 @@ export const withdraw: RequestHandler = async (req: Request, res: Response) => {
             // console.log('Wallet amount not decreased: insufficient funds');
             return res.status(400).json({ message: "Withdrawal not successful: insufficient funds" })
         }
-        const new_transaction = {
+        const new_transaction: transaction_object = {
             id: uuid(),
             user_id: id,
             transaction_type: 'W',
             amount
         }
-        const create_transfer = await knex('Transactions').insert(new_transaction);
+        const create_transaction = await knex('Transactions').insert(new_transaction);
         return res.status(200).json({
             message: "Success"
         })
@@ -184,7 +185,7 @@ export const transfer: RequestHandler = async (req: Request, res: Response) => {
             // console.log('Wallet amount not decreased: insufficient funds');
             return res.status(400).json({ message: "Transfer not successful: insufficient funds" })
         }
-        const new_transfer = {
+        const new_transfer: transfer_object = {
             id: uuid(),
             sender_id: id,
             receiver_id,

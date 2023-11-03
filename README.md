@@ -54,7 +54,7 @@ Tests can be carried out locally by running:
 npm run test
 ```
 
-Alternatively, online API testing tools such as **Postman** and **Thunderclient** can be used to test the endpoints.
+Alternatively, online API testing tools such as **Postman** and **Thunderclient** can be used to test the endpoints. Furthermore, testing can be carried out on the documentation endpoint [here](https://samuelikoli-lendsqr.onrender.com/api-docs).
 
 
 
