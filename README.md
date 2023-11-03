@@ -65,7 +65,7 @@ Alternatively, online API testing tools such as **Postman** and **Thunderclient*
 - Example request:
   ```json
   {
-    "name": "NAME"
+    "email": "jd@email.com"
   }
   ```
 
@@ -90,11 +90,11 @@ Returns JSON.
 
 Documentation can be found in `/api-docs` endpoint.
 
-Documentation can be found [here](https://github.com/hngx-org/Fortress-events-backend/tree/main/routeDocs)
+Documentation can be found [here](https://samuelikoli-lendsqr.onrender.com/api-docs)
 
 
 ## 🔗 Links
 
-* [Server URL](http://ec2-18-119-101-235.us-east-2.compute.amazonaws.com:3000/)
+* [Server URL](https://samuelikoli-lendsqr.onrender.com/)
 
 Built by SAMUEL IKOLI
