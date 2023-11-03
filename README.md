@@ -97,6 +97,11 @@ Documentation can be found [here](https://samuelikoli-lendsqr.onrender.com/api-d
 
 * [Server URL](https://samuelikoli-lendsqr.onrender.com/)
 
+### 🔗 Links to videos to aid explanation
+* [Video 1](https://www.loom.com/share/2d852752b60d412f8fc132e52bef1e56?sid=6182d9d8-19a0-4523-b7a5-101690d04365)
+* [Video 1](https://www.loom.com/share/fe05cbcf87b843a480bb5b268219fe68?sid=4fc5cdcf-9e09-45a3-95b3-de4c690b20ca)
+* [Video 1](https://www.loom.com/share/6cd2d22484254e2bae5fb9f0f21bf670?sid=e9ca42ab-d938-4837-b771-3b893b5ab176)
+
 
 ## DB DESIGN
 
